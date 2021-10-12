@@ -1,11 +1,14 @@
 import asyncio
+import logging
 import random
 from asyncio.tasks import sleep
 
 import discord
 
 from breach_bot.constants import ULT_SETS, WAIT_TIME, ULT_N_STEPS, ULT_NAME
-from breach_bot.main import logger
+
+
+logger = logging.getLogger(__name__)
 
 
 async def ult(message: discord.Message):

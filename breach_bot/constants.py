@@ -18,5 +18,5 @@ ULT_SETS = [
     UltSet("LETS GO!!!!", "voices/friend_ult_eng.mp3"),
 ]
 WAIT_TIME = 0.1
-ULT_N_STEPS = 5
+ULT_N_STEPS = 7
 ULT_NAME = "ローリングサンダー"

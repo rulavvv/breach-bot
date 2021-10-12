@@ -40,10 +40,6 @@ async def on_message(message: discord.Message):
 async def ult(message: discord.Message):
 
     logger.info(f"ULT called by {message.author}")
-    channel = message.author.voice.channel
-    members = [m for m in channel.members if not m.bot]
-    logger.info(f"Original channel: {channel}")
-    logger.info(f"Ulting members: {members}")
 
     # Do nothing if caller is not joining VC
     if message.author.voice is None:
@@ -51,6 +47,11 @@ async def ult(message: discord.Message):
         return
     else:
         await message.add_reaction("🤯")
+
+    channel = message.author.voice.channel
+    members = [m for m in channel.members if not m.bot]
+    logger.info(f"Original channel: {channel}")
+    logger.info(f"Ulting members: {members}")
 
     # Random voice
     text, voice_file = random.choice(ULT_SETS)

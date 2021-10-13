@@ -50,12 +50,21 @@ async def ult(message: discord.Message):
                     )
                 )
             )
-            await asyncio.gather(*[m.move_to(new_vc) for m in members])
+            moves = []
+            for m in members:
+                try:
+                    moves.append(m.move_to(new_vc))
+                except Exception as e:
+                    logger.info(f"Failed to move {m}: {e}")
+            await asyncio.gather(*moves)
         except Exception:
-            pass
+            logger.info("VC already exists")
         await sleep(WAIT_TIME)
 
-    await asyncio.gather(*[m.move_to(channel) for m in members])
+    try:
+        await asyncio.gather(*[m.move_to(channel) for m in members])
+    except Exception:
+        logger.info("")
 
     # Disconnect from channel
     await author_vcc.disconnect(force=False)
@@ -63,5 +72,8 @@ async def ult(message: discord.Message):
     # Channel deletion
     for vc in vcs:
         if vc is not None:
-            await vc.delete()
+            try:
+                await vc.delete()
+            except Exception:
+                logger.info("VC does not exist")
         await sleep(WAIT_TIME)

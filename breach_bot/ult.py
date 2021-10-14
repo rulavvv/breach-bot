@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import random
+import sys
 from asyncio.tasks import sleep
 
 import discord
@@ -9,6 +10,10 @@ from breach_bot.constants import ULT_SETS, WAIT_TIME, ULT_N_STEPS, ULT_NAME
 
 
 logger = logging.getLogger(__name__)
+sh = logging.StreamHandler(sys.stdout)
+sh.setLevel(logging.INFO)
+logger.setLevel(logging.INFO)
+logger.addHandler(sh)
 
 
 async def ult(message: discord.Message):
@@ -42,11 +47,12 @@ async def ult(message: discord.Message):
     # Channel creation
     vcs: list[discord.VoiceChannel] = []
     for n in range(ULT_N_STEPS):
+        vc_name = f"({ULT_NAME} {n + 1})"
         try:
             vcs.append(
                 (
                     new_vc := await message.guild.create_voice_channel(
-                        f"({ULT_NAME} {n + 1})", category=message.author.voice.channel.category
+                        vc_name, category=message.author.voice.channel.category
                     )
                 )
             )
@@ -58,7 +64,7 @@ async def ult(message: discord.Message):
                     logger.info(f"Failed to move {m}: {e}")
             await asyncio.gather(*moves)
         except Exception:
-            logger.info("VC already exists")
+            logger.info(f"VC {vc_name} already exists")
         await sleep(WAIT_TIME)
 
     try:
@@ -75,5 +81,5 @@ async def ult(message: discord.Message):
             try:
                 await vc.delete()
             except Exception:
-                logger.info("VC does not exist")
+                logger.info(f"VC {vc} does not exist, skip deletion")
         await sleep(WAIT_TIME)

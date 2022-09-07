@@ -38,7 +38,6 @@ async def get_aa(message: discord.Message):
             row = [rr + cc for rr, cc in zip(row, c)]
     if (length := len(row[0])) > 26:
         message.channel.send("長すぎ")
-        raise Exception(f"Too long word (word length must be shorter than {VALO_WIDTH // CHAR_WIDTH})")
     else:
         # padding
         needed_pad = VALO_WIDTH - length

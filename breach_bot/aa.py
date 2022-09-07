@@ -1,4 +1,4 @@
-import asyncio
+import sys
 import logging
 
 import discord
@@ -22,7 +22,7 @@ async def get_aa(message: discord.Message):
     logger.info(f"aagen called by {message.author}")
 
     await message.add_reaction("😎")
-    
+
     text = " ".join(message.content.split(" ")[1:])
 
     f = Figlet(font="clr5x6")

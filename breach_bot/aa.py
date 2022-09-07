@@ -36,8 +36,8 @@ async def get_aa(message: discord.Message):
             c = f.renderText(charactor).replace(" ", WHITE).replace("#", BLACK)
             c = [r[:-1] for r in c.split("\n")]
             row = [rr + cc for rr, cc in zip(row, c)]
-    if (length := len(row[0])) > 26:
-        message.channel.send("長すぎ")
+    if (length := len(row[0])) > VALO_WIDTH:
+        await message.channel.send("長すぎ")
     else:
         # padding
         needed_pad = VALO_WIDTH - length
@@ -45,5 +45,5 @@ async def get_aa(message: discord.Message):
         right_pad = (needed_pad // 2) * WHITE
         row = [left_pad + r + right_pad for r in row]
 
-    result = "".join(row)
-    await message.channel.send(result)
+        result = "".join(row)
+        await message.channel.send(result)

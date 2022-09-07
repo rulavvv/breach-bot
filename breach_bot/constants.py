@@ -10,7 +10,7 @@ class UltSet(NamedTuple):
     mp3file: str
 
 
-LAUNCH_KEY = "ULT"
+ULT_KEY = "ULT"
 ULT_SETS = [
     UltSet("ぶっ飛べ!!!!", "voices/enemy_ult.mp3"),
     UltSet("行くぞ!!!!", "voices/friend_ult.mp3"),
@@ -20,3 +20,5 @@ ULT_SETS = [
 WAIT_TIME = 0.1
 ULT_N_STEPS = 7
 ULT_NAME = "ローリングサンダー"
+
+AA_KEY = "aagen"

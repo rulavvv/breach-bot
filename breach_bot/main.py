@@ -5,9 +5,10 @@ import sys
 import logging
 
 import discord
+from breach_bot.aa import get_aa
 
 from breach_bot.config import read_config_from_env
-from breach_bot.constants import LAUNCH_KEY
+from breach_bot.constants import AA_KEY, ULT_KEY
 from breach_bot.ult import ult
 
 logger = logging.getLogger(__name__)
@@ -31,8 +32,11 @@ async def on_message(message: discord.Message):
     if message.author.bot:
         return
 
-    if message.content == LAUNCH_KEY:
+    if message.content == ULT_KEY:
         await ult(message)
+    
+    if message.content == AA_KEY:
+        await get_aa(message)
 
 
 client.run(config.token)

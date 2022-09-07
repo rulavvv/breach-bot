@@ -4,6 +4,8 @@ import logging
 import discord
 from pyfiglet import Figlet
 
+from breach_bot.constants import AA_KEY
+
 
 BLACK = "█"
 WHITE = "░"
@@ -23,7 +25,7 @@ async def get_aa(message: discord.Message):
 
     await message.add_reaction("😎")
 
-    text = " ".join(message.content.split(" ")[1:])
+    text = message.content[(len(AA_KEY) + 1) :]
 
     f = Figlet(font="clr5x6")
     row = ["" for _ in range(6)]
@@ -35,6 +37,7 @@ async def get_aa(message: discord.Message):
             c = [r[:-1] for r in c.split("\n")]
             row = [rr + cc for rr, cc in zip(row, c)]
     if (length := len(row[0])) > 26:
+        message.channel.send("長すぎ")
         raise Exception(f"Too long word (word length must be shorter than {VALO_WIDTH // CHAR_WIDTH})")
     else:
         # padding

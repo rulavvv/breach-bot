@@ -13,13 +13,8 @@ COPY ./poetry.lock ./
 COPY ./pyproject.toml ./
 
 RUN pip install poetry && \
-    poetry export --without-hashes --with-credentials -f requirements.txt > requirements.txt && \
-    touch -d @0 requirements.txt && \
-    pip freeze | xargs pip uninstall -y
-
-## Install packages
-RUN pip install --no-cache --requirement requirements.txt
+    poetry install
 
 COPY breach_bot breach_bot
 
-CMD ["python", "-m", "breach_bot.main"]
+CMD ["poetry", "run", "python", "-m", "breach_bot.main"]
